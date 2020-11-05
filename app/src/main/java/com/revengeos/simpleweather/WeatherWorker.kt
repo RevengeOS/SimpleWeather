@@ -41,7 +41,7 @@ class WeatherWorker(private val context: Context, workerParams: WorkerParameters
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-        val fetch = WeatherUtils(context)
+        val utils = WeatherUtils(context)
 
         getLastKnownLocation()
 
@@ -55,10 +55,10 @@ class WeatherWorker(private val context: Context, workerParams: WorkerParameters
 
         }
 
-        fetch.fetchWeather(latitude, longitude)
+        utils.fetchWeather(latitude, longitude)
 
         time = 0
-        while (!fetch.done && time <= timeOutMillis) {
+        while (!utils.done && time <= timeOutMillis) {
             Thread.sleep(1)
             time++
             if (time >= timeOutMillis) {
@@ -67,8 +67,8 @@ class WeatherWorker(private val context: Context, workerParams: WorkerParameters
         }
 
 
-        val temp = fetch.getTemperature()
-        val icon = fetch.getIcon()
+        val temp = utils.getTemperature()
+        val icon = utils.getIcon()
         intent.putExtra("temp", temp)
             .putExtra("icon", icon)
         context.sendBroadcast(intent)
