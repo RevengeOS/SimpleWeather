@@ -17,8 +17,8 @@
   -->
 
 <resources>
-    <string name="app_name">Simple Weather</string>
-    <string name="title_activity_settings">Weather settings</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <declare-styleable name="AppWidgetAttrs">
+        <attr name="appWidgetBackgroundColor" format="color" />
+        <attr name="appWidgetTextColor" format="color" />
+    </declare-styleable>
 </resources>

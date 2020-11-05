@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2020 RevengeOS
   ~ Copyright (C) 2020 Ethan Halsall
   ~
@@ -16,9 +16,12 @@
   ~ along with this program. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <string name="app_name">Simple Weather</string>
-    <string name="title_activity_settings">Weather settings</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
-</resources>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/weather_widget"
+    android:initialLayout="@layout/weather_widget"
+    android:minWidth="300dp"
+    android:minHeight="45dp"
+    android:previewImage="@drawable/example_appwidget_preview"
+
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen"></appwidget-provider>

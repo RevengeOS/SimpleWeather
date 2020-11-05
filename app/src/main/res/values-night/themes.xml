@@ -17,8 +17,9 @@
   -->
 
 <resources>
-    <string name="app_name">Simple Weather</string>
-    <string name="title_activity_settings">Weather settings</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+
+    <style name="ThemeOverlay.MyApplication.AppWidgetContainer" parent="">
+        <item name="appWidgetBackgroundColor">@color/light_blue_900</item>
+        <item name="appWidgetTextColor">@color/light_blue_200</item>
+    </style>
 </resources>
