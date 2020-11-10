@@ -26,8 +26,9 @@ import androidx.preference.PreferenceManager
 
 
 class WorkManagerStartReceiver : BroadcastReceiver() {
+    private val tag = "WorkManagerStartReceiver"
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("SimpleWeather", "onReceive: " + intent!!.action)
+        Log.d(tag, "onReceive: " + intent!!.action)
 
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -36,6 +37,8 @@ class WorkManagerStartReceiver : BroadcastReceiver() {
         if (isEnabled) {
             val alarmScheduler = context?.let { AlarmScheduler(it) }
             alarmScheduler!!.scheduleAlarm()
+        } else {
+            Log.d(tag, "Service disabled not starting")
         }
 
     }
