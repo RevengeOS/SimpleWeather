@@ -22,15 +22,21 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.preference.PreferenceManager
 
 
 class WorkManagerStartReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d("SimpleWeather", "onReceive: " + intent!!.action)
 
-        val alarmScheduler = context?.let { AlarmScheduler(it) }
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-        alarmScheduler!!.scheduleAlarm()
+        val isEnabled = sharedPreferences.getBoolean("weather_enabled", false)
+
+        if (isEnabled) {
+            val alarmScheduler = context?.let { AlarmScheduler(it) }
+            alarmScheduler!!.scheduleAlarm()
+        }
 
     }
 }
