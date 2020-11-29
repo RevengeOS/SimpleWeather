@@ -44,7 +44,7 @@ class WeatherUtils(private val context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context)
     private val units = sharedPreferences.getString("unit_preference", "")
 
-    interface getweather {
+    interface getWeather {
         @GET("weather?")
         fun getCurrentWeatherData(
             @Query("lat") lat: String?,
@@ -62,7 +62,7 @@ class WeatherUtils(private val context: Context) {
 
         val service =
             retrofit.create(
-                getweather::class.java
+                getWeather::class.java
             )
         val call: Call<JsonObject?>? = service.getCurrentWeatherData(
             latitude.toString(),
