@@ -23,12 +23,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.provider.ContactsContract
-import android.view.View
 import android.widget.RemoteViews
 import com.revengeos.weathericons.WeatherIconsHelper
-import java.util.*
 
 
 /**
@@ -69,37 +65,6 @@ class WeatherWidget : AppWidgetProvider() {
         }
     }
 
-    private fun isEvening(): Boolean {
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, 20)
-        return System.currentTimeMillis() > calendar.timeInMillis
-    }
-
-    private fun isMorning(): Boolean {
-        val startTime: Calendar = Calendar.getInstance()
-        startTime.set(Calendar.HOUR_OF_DAY, 4)
-        val endTime: Calendar = Calendar.getInstance()
-        endTime.set(Calendar.HOUR_OF_DAY, 10)
-        return System.currentTimeMillis() > startTime.timeInMillis && System.currentTimeMillis() < endTime.timeInMillis
-    }
-
-    private fun getGreeting(context: Context): String? {
-        val cursor: Cursor? = context.contentResolver
-            .query(ContactsContract.Profile.CONTENT_URI, null, null, null, null)
-        if (cursor != null && cursor.count > 0 && cursor.moveToFirst()) {
-            val fullName: String = cursor.getString(cursor.getColumnIndex("display_name"))
-            cursor.close()
-            val name = fullName.split(" ")[0]
-            if (isMorning()) {
-                return "Good morning, $name"
-            }
-            if (isEvening()) {
-                return "Good night, $name"
-            }
-        }
-        return null
-    }
-
 
     private fun updateAppWidget(
         context: Context,
@@ -113,18 +78,8 @@ class WeatherWidget : AppWidgetProvider() {
 
         val iconResource = WeatherIconsHelper.getDrawable(utils.getIcon(), context)
 
-        if ((isEvening() || isMorning())) {
-            views.setViewVisibility(R.id.condition_line, View.GONE)
-            views.setViewVisibility(R.id.greeting_line, View.VISIBLE)
-            views.setTextViewText(R.id.greeting_current_text, utils.getTemperature())
-            iconResource?.let { views.setImageViewResource(R.id.greeting_current_image, it) }
-            views.setTextViewText(R.id.greeting_text, getGreeting(context))
-        } else {
-            views.setViewVisibility(R.id.condition_line, View.VISIBLE)
-            views.setViewVisibility(R.id.greeting_line, View.GONE)
-            views.setTextViewText(R.id.current_text, utils.getTemperature())
-            iconResource?.let { views.setImageViewResource(R.id.current_image, it) }
-        }
+        views.setTextViewText(R.id.current_text, utils.getTemperature())
+        iconResource?.let { views.setImageViewResource(R.id.current_image, it) }
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
