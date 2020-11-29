@@ -18,97 +18,68 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/weather_container"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false">
 
     <LinearLayout
-        android:id="@+id/condition_line"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:clipChildren="false">
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="hh:mm"
+            android:format24Hour="hh:mm"
+            android:textAppearance="@style/TextAppearance.WeatherWidget.Clock"/>
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="EE, MMM d"
+            android:format24Hour="EE, MMM d"
+            android:textAppearance="@style/TextAppearance.WeatherWidget.Date"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="horizontal"
+        android:clipChildren="false">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:orientation="vertical"
-            android:paddingRight="165dp">
-
-            <TextClock
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:format12Hour="hh:mm"
-                android:format24Hour="hh:mm"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:textColor="#ffffff"
-                android:textSize="24sp" />
-
-            <TextClock
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:format12Hour="EE, MMM d"
-                android:format24Hour="EE, MMM d"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:textColor="#ffffff"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:clipChildren="false">
 
             <TextView
                 android:id="@+id/current_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="#ffffff"
-                android:textSize="24sp" />
+                android:textAppearance="@style/TextAppearance.WeatherWidget.Clock" />
 
             <TextView
                 android:id="@+id/locale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="Liverpool"
-                android:textColor="#ffffff"
-                android:textSize="14sp" />
+                android:text="--"
+                android:textAppearance="@style/TextAppearance.WeatherWidget.Date" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/current"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/current_image"
-                android:layout_width="43sp"
-                android:layout_height="43sp"
-                android:layout_gravity="center"
-                android:scaleType="centerInside" />
-
-        </LinearLayout>
-
+        <ImageView
+            android:id="@+id/current_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="11dp"
+            android:layout_marginStart="5dp"/>
     </LinearLayout>
 </FrameLayout>
