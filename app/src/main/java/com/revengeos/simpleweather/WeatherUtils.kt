@@ -106,6 +106,12 @@ class WeatherUtils(private val context: Context) {
                     return item.locality
                 }
             }
+            for (item in addresses) {
+                if (item.subAdminArea != null) {
+                    return item.subAdminArea
+                }
+            }
+
         }
         return null
     }
