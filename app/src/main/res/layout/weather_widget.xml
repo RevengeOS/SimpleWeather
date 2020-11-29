@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:format12Hour="hh:mm"
-            android:format24Hour="hh:mm"
+            android:format24Hour="HH:mm"
             android:textAppearance="@style/TextAppearance.WeatherWidget.Clock"/>
 
         <TextClock
