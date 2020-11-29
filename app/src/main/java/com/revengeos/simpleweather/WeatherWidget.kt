@@ -75,10 +75,13 @@ class WeatherWidget : AppWidgetProvider() {
         val views = RemoteViews(context.packageName, R.layout.weather_widget)
 
         val utils = WeatherUtils(context)
+        val address = utils.getAddress()
+        val temperature = utils.getTemperature()
+        val icon = utils.getIcon()
 
-        val iconResource = WeatherIconsHelper.getDrawable(utils.getIcon(), context)
-
-        views.setTextViewText(R.id.current_text, utils.getTemperature())
+        val iconResource = WeatherIconsHelper.getDrawable(icon, context)
+        views.setTextViewText(R.id.locale, address)
+        views.setTextViewText(R.id.current_text, temperature)
         iconResource?.let { views.setImageViewResource(R.id.current_image, it) }
 
         // Instruct the widget manager to update the widget

@@ -66,7 +66,6 @@ class WeatherWorker(private val context: Context, workerParams: WorkerParameters
             }
         }
 
-
         val temp = utils.getTemperature()
         val icon = utils.getIcon()
         intent.putExtra("temp", temp)

@@ -20,6 +20,8 @@ package com.revengeos.simpleweather
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.location.Address
+import android.location.Geocoder
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -32,6 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.io.File
+import java.util.*
 
 
 class WeatherUtils(private val context: Context) {
@@ -71,6 +74,8 @@ class WeatherUtils(private val context: Context) {
             apiKey
         )
 
+        val address = getAddress(latitude, longitude)
+
         call!!.enqueue(object : Callback<JsonObject?> {
             override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
                 return
@@ -81,8 +86,10 @@ class WeatherUtils(private val context: Context) {
                 response: Response<JsonObject?>
             ) {
                 if (response.code() == 200) {
-
                     var json = Gson().fromJson(response.body(), WeatherData::class.java)
+                    if (address != null) {
+                        json.sys.address = address
+                    }
                     utils.save(file, json)
                     done = true
                 }
@@ -90,8 +97,26 @@ class WeatherUtils(private val context: Context) {
         })
     }
 
+    fun getAddress(latitude: Double, longitude: Double): String? {
+        val gcd = Geocoder(context, Locale.getDefault())
+        val addresses: List<Address> = gcd.getFromLocation(latitude, longitude, 10)
+        if (addresses.isNotEmpty()) {
+            for (item in addresses) {
+                if (item.locality != null) {
+                    return item.locality
+                }
+            }
+        }
+        return null
+    }
+
     fun getWeatherFromCache(): WeatherData? {
         return utils.load(file)
+    }
+
+    fun getAddress(): String {
+        val data = getWeatherFromCache()
+        return data!!.sys.address
     }
 
     fun getTemperature(): String {
