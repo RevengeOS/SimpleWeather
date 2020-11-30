@@ -18,12 +18,15 @@
 
 package com.revengeos.simpleweather
 
+import android.Manifest
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.widget.RemoteViews
+import androidx.core.app.ActivityCompat
 import com.revengeos.weathericons.WeatherIconsHelper
 
 
@@ -74,6 +77,10 @@ class WeatherWidget : AppWidgetProvider() {
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, R.layout.weather_widget)
 
+        if (checkPermission(context)) {
+            return
+        }
+
         val utils = WeatherUtils(context)
         val address = utils.getAddress()
         val temperature = utils.getTemperature()
@@ -86,5 +93,19 @@ class WeatherWidget : AppWidgetProvider() {
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
+    }
+
+    private fun checkPermission(context: Context): Boolean {
+
+        return ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
     }
 }
