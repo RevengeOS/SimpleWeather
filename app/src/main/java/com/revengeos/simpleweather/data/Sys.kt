@@ -31,7 +31,5 @@ data class Sys(
     @SerializedName("sunset")
     val sunset: Long,
     @SerializedName("type")
-    val type: Int,
-    @SerializedName("address")
-    var address: String
+    val type: Int
 )
